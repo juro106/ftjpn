@@ -111,9 +111,9 @@ let g:ftjpn_T = 'T'
 |--|--|--|
 |が|g|Subject, but
 |を|w,o|Object
-|は|h|is,
-|と,て|t,e|and, with
-|に|n(i)|to
+|は|h|is
+|と,て|t,o,e|and, with
+|に|n,i|to
 |の|n,o|'s
 |で|d,e,|by
 
@@ -124,18 +124,20 @@ let g:ftjpn_T = 'T'
 ### A級
 |日本語|key 候補|意味合い|
 |--|--|--|
-|へ|h(e)|to
+|へ|h,e|to
 |で|d,e|by
 |だ|d,a|$
-|な|n(a)|like
+|な|n,a|like
 |ば|b|and 
-|し|s,i|do,$ 
+|し|s,i|do
 |す|s,u|do,$ 
-|る|r(u)|do,$
+|る|r,u|do,$
 |た|t,a|did
 |か|k|or 
 |こ|k,o|thing
 |よ|y,o|by
+|こ|k,o|
+|ま|m,a|
 
 `る`や`か`はたくさん出てきますが、案外微妙な場所に出現することが多い印象です。移動した後には当然消去かヤンクをしたいはずなので、「だったら別な場所行くわ」という扱いになってしまいます。
 
