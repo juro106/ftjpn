@@ -18,6 +18,7 @@ function! s:ConvertRegex(char) abort
         return '\~'
     else
         return a:char
+    endif
 endfunction
 
 " 正規表現の形を元に戻す
@@ -36,6 +37,21 @@ function! s:RevertRegex(char) abort
         return '~'
     else
         return a:char
+    endif
+endfunction
+
+" 最終的なキー決定 
+function! s:SetChar(dict)
+    if len(a:dict)==0
+        return ''
+    else
+        let min_col = min(a:dict)
+        for [key, value] in items(a:dict)
+            if value ==# min_col
+                return s:RevertRegex(key)
+            endif
+        endfor
+    endif
 endfunction
 
 " f, t 前方検索で利用する char の選定
@@ -52,16 +68,7 @@ function! s:SetForwardChar(pattern) abort
         endif
     endfor 
 
-    if len(dict)==0
-        return ''
-    else
-        let min_col = min(dict)
-        for [key, value] in items(dict)
-            if value ==# min_col
-                return s:RevertRegex(key)
-            endif
-        endfor
-    endif
+    return s:SetChar(dict)
 endfunction
 
 " F, T 後方検索で利用する char の選定
@@ -87,16 +94,7 @@ function! s:SetBackChar(pattern) abort
         endif
     endfor 
     
-    if len(dict)==0
-        return ''
-    else
-        let min_col = min(dict)
-        for [key, value] in items(dict)
-            if value ==# min_col
-                return s:RevertRegex(key)
-            endif 
-        endfor
-    endif
+    return s:SetChar(dict)
 endfunction
 
 " ----------------------------------------------------------
