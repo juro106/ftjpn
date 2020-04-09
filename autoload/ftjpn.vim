@@ -4,17 +4,17 @@
 
 " 正規表現の形にする
 function! s:ConvertRegex(char) abort
-    if a:char ==# '.' || a:char ==# '\.'
+    if a:char ==# '.'
         return '\.'
-    elseif a:char ==# '*' || a:char ==# '\*'
+    elseif a:char ==# '*'
         return '\*'
-    elseif a:char ==# '^' || a:char ==# '\^'
+    elseif a:char ==# '^'
         return '\^'
-    elseif a:char ==# '$' || a:char ==# '\$'
+    elseif a:char ==# '$'
         return '\$'
-    elseif a:char ==# '[' || a:char ==# '\['
+    elseif a:char ==# '['
         return '\['
-    elseif a:char ==# '~' || a:char ==# '\~'
+    elseif a:char ==# '~'
         return '\~'
     else
         return a:char
