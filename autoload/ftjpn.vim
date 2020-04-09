@@ -40,28 +40,22 @@ endfunction
 
 " f, t 前方検索で利用する char の選定
 function! s:SetForwardChar(pattern) abort
-
     let col = col('.')-1
     let line = getline('.')[col:]
-    " let zen = "[^\x01-\x7E]"
-    " let zenline = getline('.')[col('.'):]
     let dict = {}
-    let col_list = []
 
     for char in a:pattern
         let keyword = s:ConvertRegex(char)
         let matchcol = match(line, keyword, 1, 1)
-        let dict[char] = matchcol
         if matchcol > 0
-            call add(col_list, matchcol)
+            let dict[char] = matchcol
         endif
     endfor 
 
-    let min_col = min(col_list)
-
-    if len(col_list)==0
+    if len(dict)==0
         return ''
     else
+        let min_col = min(dict)
         for [key, value] in items(dict)
             if value ==# min_col
                 return s:RevertRegex(key)
@@ -74,12 +68,9 @@ endfunction
 function! s:SetBackChar(pattern) abort
     let col = col('.')-1
     let line = getline('.')[:col]
-
     let dict = {}
-    let col_list = []
     let linelen = strlen(line)
     let arr = []
-
 
     while linelen > 0
         let linelen = linelen - 1
@@ -91,17 +82,15 @@ function! s:SetBackChar(pattern) abort
     for char in a:pattern
         let keyword = s:ConvertRegex(char)
         let matchcol = match(newline, keyword, 1, 1)
-        let dict[char] = matchcol
         if matchcol > 0
-            call add(col_list, matchcol)
+            let dict[char] = matchcol
         endif
     endfor 
     
-    let min_col = min(col_list)
-
-    if len(col_list)==0
+    if len(dict)==0
         return ''
     else
+        let min_col = min(dict)
         for [key, value] in items(dict)
             if value ==# min_col
                 return s:RevertRegex(key)
