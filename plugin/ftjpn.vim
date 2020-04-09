@@ -37,7 +37,7 @@ function! s:SetKeyMap(list) abort
         exe 'nnoremap <silent> ' . g:ftjpn_f . item[0] . ' :<C-u>call ftjpn#Jfmove(' . charlist . ')<CR>'
         exe 'nnoremap <silent> ' . g:ftjpn_F . item[0] . ' :<C-u>call ftjpn#JFmove(' . charlist . ')<CR>'
         exe 'nnoremap <silent> ' . g:ftjpn_t . item[0] . ' :<C-u>call ftjpn#Jtmove(' . charlist . ')<CR>'
-        exe 'nnoremap <silent> ' . g:ftjpn_F . item[0] . ' :<C-u>call ftjpn#JTmove(' . charlist . ')<CR>'
+        exe 'nnoremap <silent> ' . g:ftjpn_T . item[0] . ' :<C-u>call ftjpn#JTmove(' . charlist . ')<CR>'
         exe 'onoremap <silent><expr> ' . g:ftjpn_f . item[0] . ' ftjpn#Jof(' . charlist . ')'
         exe 'onoremap <silent><expr> ' . g:ftjpn_F . item[0] . ' ftjpn#JoF(' . charlist . ')'
         exe 'onoremap <silent><expr> ' . g:ftjpn_t . item[0] . ' ftjpn#Jot(' . charlist . ')'
