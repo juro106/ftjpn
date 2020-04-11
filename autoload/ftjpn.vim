@@ -1,40 +1,11 @@
 " ----------------------------------------------------------
-" f & t command for jadot & jacomma
+" f & t 便利にする
 " ----------------------------------------------------------
 
-" 正規表現の形にする
+" match()用 一部の記号は正規表現の形にする
 function! s:ConvertRegex(char) abort
-    if a:char ==# '.'
-        return '\.'
-    elseif a:char ==# '*'
-        return '\*'
-    elseif a:char ==# '^'
-        return '\^'
-    elseif a:char ==# '$'
-        return '\$'
-    elseif a:char ==# '['
-        return '\['
-    elseif a:char ==# '~'
-        return '\~'
-    else
-        return a:char
-    endif
-endfunction
-
-" 正規表現の形を元に戻す
-function! s:RevertRegex(char) abort
-    if a:char ==# '\.'
-        return '.'
-    elseif a:char ==# '\*'
-        return '*'
-    elseif a:char ==# '\^'
-        return '^'
-    elseif a:char ==# '\$'
-        return '$'
-    elseif a:char ==# '\['
-        return '['
-    elseif a:char ==# '\~'
-        return '~'
+    if a:char ==# '.' || '*' || '^' || '$' || '[' || '~'
+        return '\' . a:char
     else
         return a:char
     endif
@@ -48,7 +19,7 @@ function! s:SetChar(dict)
         let min_col = min(a:dict)
         for [key, value] in items(a:dict)
             if value ==# min_col
-                return s:RevertRegex(key)
+                return key
             endif
         endfor
     endif

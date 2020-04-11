@@ -20,9 +20,6 @@ if !exists('g:ftjpn_key_list')
 let g:ftjpn_key_list = [
     \ ['.', '。', '．'],
     \ [',', '、', '，'],
-    \ ['t', 'と'],
-    \ ['d', 'で'],
-    \ ['n', 'に'],
     \ ]
 endif
 
