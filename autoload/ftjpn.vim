@@ -1,6 +1,5 @@
-" ----------------------------------------------------------
-" f & t 便利にする
-" ----------------------------------------------------------
+let s:save_cpo = &cpo
+set cpo&vim
 
 " match()用 一部の記号は正規表現の形にする
 function! s:ConvertRegex(char) abort
@@ -107,3 +106,6 @@ endfunction
 function! ftjpn#JoT(pattern) abort
     return "T" . s:SetBackChar(a:pattern)
 endfunction
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
