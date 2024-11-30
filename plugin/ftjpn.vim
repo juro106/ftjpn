@@ -16,12 +16,12 @@ if !get(g:, 'ftjpn_no_defalut_key_mappings', 0)
     let g:ftjpn_T = 'T'
 endif
 
-"if !exists('g:ftjpn_key_list')
-"let g:ftjpn_key_list = [
-"    \ ['.', '。', '．'],
-"    \ [',', '、', '，'],
-"    \ ]
-"endif
+if !exists('g:ftjpn_key_list')
+let g:ftjpn_key_list = [
+   \ ['.'],
+   \ [','],
+   \ ]
+endif
 
 function! s:SetKeyMap(list) abort
     for item in a:list

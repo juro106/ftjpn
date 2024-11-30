@@ -3,7 +3,7 @@ set cpo&vim
 
 " match()用 一部の記号は正規表現の形にする
 function! s:ConvertRegex(char) abort
-    if a:char ==# '.' || '*' || '^' || '$' || '[' || '~'
+    if a:char ==# '.' || a:char ==# '*' || a:char ==# '^' || a:char ==# '$' || a:char ==# '[' || a:char ==# '~'
         return '\' . a:char
     else
         return a:char
