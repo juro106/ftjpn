@@ -3,11 +3,7 @@ set cpo&vim
 
 " match()用 一部の記号は正規表現の形にする
 function! s:ConvertRegex(char) abort
-    if a:char ==# '.' || a:char ==# '*' || a:char ==# '^' || a:char ==# '$' || a:char ==# '[' || a:char ==# '~'
-        return '\' . a:char
-    else
-        return a:char
-    endif
+    return a:char =~# '[.*^$\[~]' ? '\' . a:char : a:char
 endfunction
 
 " 最終的なキー決定 
@@ -43,7 +39,7 @@ endfunction
 
 " F, T 後方検索で利用する char の選定
 function! s:SetBackChar(pattern) abort
-    let col = col('.')-1
+    let col = col('.')-2
     let line = getline('.')[:col]
     let dict = {}
     let linelen = strlen(line)
@@ -54,7 +50,7 @@ function! s:SetBackChar(pattern) abort
         let arr = add(arr, strcharpart(line, linelen))
     endwhile
     
-    let newline = join(arr,"")
+    let newline = join(arr, "")
 
     for char in a:pattern
         let keyword = s:ConvertRegex(char)

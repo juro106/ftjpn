@@ -27,8 +27,9 @@ function! s:SetKeyMap(list) abort
     for item in a:list
         let arr = []
         for i in item
-            let j = "'" . i . "'"
-            call add(arr, j)
+            let j = i == '|' ? '\|' : i
+            let k = "'" . j . "'"
+            call add(arr, k)
         endfor
         let key_list = "[" . join(arr, ",") . "]"
         exe 'nnoremap <silent> ' . g:ftjpn_f . item[0] . ' :<C-u>call ftjpn#Jfmove(' . key_list . ')<CR>'
@@ -49,3 +50,4 @@ call <SID>SetKeyMap(g:ftjpn_key_list)
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
+
