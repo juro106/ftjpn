@@ -38,27 +38,27 @@ else
        \ ]
 endif
 
-function! s:SetKeyMap(list) abort
-    for item in a:list
+function! s:SetKeyMap(nested_list) abort
+    for list in a:nested_list
         let arr = []
-        for i in item
+        for i in list
             let j = i == '|' ? '\|' : i
             let k = "'" . j . "'"
             call add(arr, k)
         endfor
-        let key_list = "[" . join(arr, ",") . "]"
-        exe 'nnoremap <silent> ' . g:ftjpn_f . item[0] . ' :<C-u>call ftjpn#Jfmove(' . key_list . ')<CR>'
-        exe 'nnoremap <silent> ' . g:ftjpn_F . item[0] . ' :<C-u>call ftjpn#JFmove(' . key_list . ')<CR>'
-        exe 'nnoremap <silent> ' . g:ftjpn_t . item[0] . ' :<C-u>call ftjpn#Jtmove(' . key_list . ')<CR>'
-        exe 'nnoremap <silent> ' . g:ftjpn_T . item[0] . ' :<C-u>call ftjpn#JTmove(' . key_list . ')<CR>'
-        exe 'onoremap <silent><expr> ' . g:ftjpn_f . item[0] . ' ftjpn#Jof(' . key_list . ')'
-        exe 'onoremap <silent><expr> ' . g:ftjpn_F . item[0] . ' ftjpn#JoF(' . key_list . ')'
-        exe 'onoremap <silent><expr> ' . g:ftjpn_t . item[0] . ' ftjpn#Jot(' . key_list . ')'
-        exe 'onoremap <silent><expr> ' . g:ftjpn_T . item[0] . ' ftjpn#JoT(' . key_list . ')'
-        exe 'xnoremap <silent><expr> ' . g:ftjpn_f . item[0] . ' ftjpn#Jof(' . key_list . ')'
-        exe 'xnoremap <silent><expr> ' . g:ftjpn_F . item[0] . ' ftjpn#JoF(' . key_list . ')'
-        exe 'xnoremap <silent><expr> ' . g:ftjpn_t . item[0] . ' ftjpn#Jot(' . key_list . ')'
-        exe 'xnoremap <silent><expr> ' . g:ftjpn_T . item[0] . ' ftjpn#JoT(' . key_list . ')'
+        let keys = "[" . join(arr, ",") . "]"
+        exe 'nnoremap <silent> ' . g:ftjpn_f . list[0] . ' :<C-u>call ftjpn#Jfmove(' . keys . ')<CR>'
+        exe 'nnoremap <silent> ' . g:ftjpn_F . list[0] . ' :<C-u>call ftjpn#JFmove(' . keys . ')<CR>'
+        exe 'nnoremap <silent> ' . g:ftjpn_t . list[0] . ' :<C-u>call ftjpn#Jtmove(' . keys . ')<CR>'
+        exe 'nnoremap <silent> ' . g:ftjpn_T . list[0] . ' :<C-u>call ftjpn#JTmove(' . keys . ')<CR>'
+        exe 'onoremap <silent><expr> ' . g:ftjpn_f . list[0] . ' ftjpn#Jof(' . keys . ')'
+        exe 'onoremap <silent><expr> ' . g:ftjpn_F . list[0] . ' ftjpn#JoF(' . keys . ')'
+        exe 'onoremap <silent><expr> ' . g:ftjpn_t . list[0] . ' ftjpn#Jot(' . keys . ')'
+        exe 'onoremap <silent><expr> ' . g:ftjpn_T . list[0] . ' ftjpn#JoT(' . keys . ')'
+        exe 'xnoremap <silent><expr> ' . g:ftjpn_f . list[0] . ' ftjpn#Jof(' . keys . ')'
+        exe 'xnoremap <silent><expr> ' . g:ftjpn_F . list[0] . ' ftjpn#JoF(' . keys . ')'
+        exe 'xnoremap <silent><expr> ' . g:ftjpn_t . list[0] . ' ftjpn#Jot(' . keys . ')'
+        exe 'xnoremap <silent><expr> ' . g:ftjpn_T . list[0] . ' ftjpn#JoT(' . keys . ')'
     endfor
 endfunction
 call <SID>SetKeyMap(key_list)
