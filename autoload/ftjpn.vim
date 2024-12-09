@@ -27,7 +27,7 @@ function! s:SetForwardChar(pattern) abort
     let dict = {}
 
     for char in a:pattern
-        let keyword = s:ConvertRegex(char)
+        let keyword = '\C' . s:ConvertRegex(char)
         let matchcol = match(line, keyword, 1, 1)
         if matchcol > 0
             let dict[char] = matchcol
@@ -53,7 +53,7 @@ function! s:SetBackChar(pattern) abort
     let newline = join(arr, "")
 
     for char in a:pattern
-        let keyword = s:ConvertRegex(char)
+        let keyword = '\C' . s:ConvertRegex(char)
         let matchcol = match(newline, keyword, 1, 1)
         if matchcol > 0
             let dict[char] = matchcol
