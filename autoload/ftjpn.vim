@@ -1,12 +1,12 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-" match()用 一部の記号は正規表現の形にする
-function! s:ConvertRegex(char) abort
-    return a:char =~# '[.*^$\[~]' ? '\' . a:char : a:char
+" match()用 一部の記号はエスケープする
+function! s:EscapeSpecialChar(s) abort
+    return a:s =~# '[.*^$\[~]' ? '\' . a:s : a:s
 endfunction
 
-" 最終的なキー決定 
+" 最終的なキー決定
 function! s:SetChar(dict)
     if len(a:dict)==0
         return ''
@@ -26,13 +26,13 @@ function! s:SetForwardChar(pattern) abort
     let line = getline('.')[col:]
     let dict = {}
 
-    for char in a:pattern
-        let keyword = '\C' . s:ConvertRegex(char)
-        let matchcol = match(line, keyword, 1, 1)
+    for s in a:pattern
+        let char = '\C' . s:EscapeSpecialChar(s)
+        let matchcol = match(line, char, 1, 1)
         if matchcol > 0
-            let dict[char] = matchcol
+            let dict[s] = matchcol
         endif
-    endfor 
+    endfor
 
     return s:SetChar(dict)
 endfunction
@@ -49,22 +49,22 @@ function! s:SetBackChar(pattern) abort
         let linelen = linelen - 1
         let arr = add(arr, strcharpart(line, linelen))
     endwhile
-    
+
     let newline = join(arr, "")
 
-    for char in a:pattern
-        let keyword = '\C' . s:ConvertRegex(char)
-        let matchcol = match(newline, keyword, 1, 1)
+    for s in a:pattern
+        let char = '\C' . s:EscapeSpecialChar(s)
+        let matchcol = match(newline, char, 1, 1)
         if matchcol > 0
-            let dict[char] = matchcol
+            let dict[s] = matchcol
         endif
-    endfor 
-    
+    endfor
+
     return s:SetChar(dict)
 endfunction
 
 " ----------------------------------------------------------
-" f, F & t, T 
+" f, F & t, T
 " ----------------------------------------------------------
 
 function! ftjpn#Jfmove(pattern) abort
