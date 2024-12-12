@@ -50,16 +50,28 @@ for list in key_list
     exe  'nnoremap <silent> ' . g:ftjpn_t . key . ' :<C-u>call ftjpn#Forward_N("' . g:ftjpn_t . '",' . keys . ')<CR>'
     exe  'nnoremap <silent> ' . g:ftjpn_F . key . ' :<C-u>call ftjpn#Backward_N("' . g:ftjpn_F . '",' . keys . ')<CR>'
     exe  'nnoremap <silent> ' . g:ftjpn_T . key . ' :<C-u>call ftjpn#Backward_N("' . g:ftjpn_T . '",' . keys . ')<CR>'
-    exe  'onoremap <silent><expr> ' . g:ftjpn_f . key . ' ftjpn#Forward_O("' . g:ftjpn_f . '",' . keys . ')<CR>'
-    exe  'onoremap <silent><expr> ' . g:ftjpn_t . key . ' ftjpn#Forward_O("' . g:ftjpn_t . '",' . keys . ')<CR>'
-    exe  'onoremap <silent><expr> ' . g:ftjpn_F . key . ' ftjpn#Backward_O("' . g:ftjpn_F . '",' . keys . ')<CR>'
-    exe  'onoremap <silent><expr> ' . g:ftjpn_T . key . ' ftjpn#Backward_O("' . g:ftjpn_T . '",' . keys . ')<CR>'
-    exe  'xnoremap <silent><expr> ' . g:ftjpn_f . key . ' ftjpn#Forward_O("' . g:ftjpn_f . '",' . keys . ')<CR>'
-    exe  'xnoremap <silent><expr> ' . g:ftjpn_t . key . ' ftjpn#Forward_O("' . g:ftjpn_t . '",' . keys . ')<CR>'
-    exe  'xnoremap <silent><expr> ' . g:ftjpn_F . key . ' ftjpn#Backward_O("' . g:ftjpn_F . '",' . keys . ')<CR>'
-    exe  'xnoremap <silent><expr> ' . g:ftjpn_T . key . ' ftjpn#Backward_O("' . g:ftjpn_T . '",' . keys . ')<CR>'
+    exe  'onoremap <silent><expr> ' . g:ftjpn_f . key . ' ftjpn#Forward_O("' . g:ftjpn_f . '",' . keys . ')'
+    exe  'onoremap <silent><expr> ' . g:ftjpn_t . key . ' ftjpn#Forward_O("' . g:ftjpn_t . '",' . keys . ')'
+    exe  'onoremap <silent><expr> ' . g:ftjpn_F . key . ' ftjpn#Backward_O("' . g:ftjpn_F . '",' . keys . ')'
+    exe  'onoremap <silent><expr> ' . g:ftjpn_T . key . ' ftjpn#Backward_O("' . g:ftjpn_T . '",' . keys . ')'
+    exe  'xnoremap <silent><expr> ' . g:ftjpn_f . key . ' ftjpn#Forward_O("' . g:ftjpn_f . '",' . keys . ')'
+    exe  'xnoremap <silent><expr> ' . g:ftjpn_t . key . ' ftjpn#Forward_O("' . g:ftjpn_t . '",' . keys . ')'
+    exe  'xnoremap <silent><expr> ' . g:ftjpn_F . key . ' ftjpn#Backward_O("' . g:ftjpn_F . '",' . keys . ')'
+    exe  'xnoremap <silent><expr> ' . g:ftjpn_T . key . ' ftjpn#Backward_O("' . g:ftjpn_T . '",' . keys . ')'
 
 endfor
+
+function! ftjpn#async_setup()
+    " 200ms 後に非同期で処理を実行
+    sleep 200m
+    call ftjpn#setup_mappings()
+endfunction
+
+" Vim起動後、200ms 後に非同期で実行
+augroup ftjpn_async
+    autocmd!
+    autocmd VimEnter * call ftjpn#async_setup()
+augroup END
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
