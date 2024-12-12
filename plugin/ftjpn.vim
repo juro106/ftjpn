@@ -35,7 +35,6 @@ else
     let key_list = [['.'], [',']]
 endif
 
-let cmds = []
 for list in key_list
     let key = list[0]
     let arr = []
@@ -47,21 +46,20 @@ for list in key_list
 
     let keys = "[" . join(arr, ",") . "]"
 
-    call add(cmds,  'nnoremap <silent> ' . g:ftjpn_f . key . ' :<C-u>call ftjpn#Forward_N("' . g:ftjpn_f . '",' . keys . ')<CR>' . '\n'
-                \ . 'nnoremap <silent> ' . g:ftjpn_t . key . ' :<C-u>call ftjpn#Forward_N("' . g:ftjpn_t . '",' . keys . ')<CR>' . '\n'
-                \ . 'nnoremap <silent> ' . g:ftjpn_F . key . ' :<C-u>call ftjpn#Backward_N("' . g:ftjpn_F . '",' . keys . ')<CR>' . '\n'
-                \ . 'nnoremap <silent> ' . g:ftjpn_T . key . ' :<C-u>call ftjpn#Backward_N("' . g:ftjpn_T . '",' . keys . ')<CR>' . '\n'
-                \ . 'onoremap <silent><expr> ' . g:ftjpn_f . key . ' ftjpn#Forward_O("' . g:ftjpn_f . '",' . keys . ')<CR>' . '\n'
-                \ . 'onoremap <silent><expr> ' . g:ftjpn_t . key . ' ftjpn#Forward_O("' . g:ftjpn_t . '",' . keys . ')<CR>' . '\n'
-                \ . 'onoremap <silent><expr> ' . g:ftjpn_F . key . ' ftjpn#Backward_O("' . g:ftjpn_F . '",' . keys . ')<CR>' . '\n'
-                \ . 'onoremap <silent><expr> ' . g:ftjpn_T . key . ' ftjpn#Backward_O("' . g:ftjpn_T . '",' . keys . ')<CR>' . '\n'
-                \ . 'xnoremap <silent><expr> ' . g:ftjpn_f . key . ' ftjpn#Forward_O("' . g:ftjpn_f . '",' . keys . ')<CR>' . '\n'
-                \ . 'xnoremap <silent><expr> ' . g:ftjpn_t . key . ' ftjpn#Forward_O("' . g:ftjpn_t . '",' . keys . ')<CR>' . '\n'
-                \ . 'xnoremap <silent><expr> ' . g:ftjpn_F . key . ' ftjpn#Backward_O("' . g:ftjpn_F . '",' . keys . ')<CR>' . '\n'
-                \ . 'xnoremap <silent><expr> ' . g:ftjpn_T . key . ' ftjpn#Backward_O("' . g:ftjpn_T . '",' . keys . ')<CR>' . '\n')
-endfor
+    exe  'nnoremap <silent> ' . g:ftjpn_f . key . ' :<C-u>call ftjpn#Forward_N("' . g:ftjpn_f . '",' . keys . ')<CR>'
+    exe  'nnoremap <silent> ' . g:ftjpn_t . key . ' :<C-u>call ftjpn#Forward_N("' . g:ftjpn_t . '",' . keys . ')<CR>'
+    exe  'nnoremap <silent> ' . g:ftjpn_F . key . ' :<C-u>call ftjpn#Backward_N("' . g:ftjpn_F . '",' . keys . ')<CR>'
+    exe  'nnoremap <silent> ' . g:ftjpn_T . key . ' :<C-u>call ftjpn#Backward_N("' . g:ftjpn_T . '",' . keys . ')<CR>'
+    exe  'onoremap <silent><expr> ' . g:ftjpn_f . key . ' ftjpn#Forward_O("' . g:ftjpn_f . '",' . keys . ')<CR>'
+    exe  'onoremap <silent><expr> ' . g:ftjpn_t . key . ' ftjpn#Forward_O("' . g:ftjpn_t . '",' . keys . ')<CR>'
+    exe  'onoremap <silent><expr> ' . g:ftjpn_F . key . ' ftjpn#Backward_O("' . g:ftjpn_F . '",' . keys . ')<CR>'
+    exe  'onoremap <silent><expr> ' . g:ftjpn_T . key . ' ftjpn#Backward_O("' . g:ftjpn_T . '",' . keys . ')<CR>'
+    exe  'xnoremap <silent><expr> ' . g:ftjpn_f . key . ' ftjpn#Forward_O("' . g:ftjpn_f . '",' . keys . ')<CR>'
+    exe  'xnoremap <silent><expr> ' . g:ftjpn_t . key . ' ftjpn#Forward_O("' . g:ftjpn_t . '",' . keys . ')<CR>'
+    exe  'xnoremap <silent><expr> ' . g:ftjpn_F . key . ' ftjpn#Backward_O("' . g:ftjpn_F . '",' . keys . ')<CR>'
+    exe  'xnoremap <silent><expr> ' . g:ftjpn_T . key . ' ftjpn#Backward_O("' . g:ftjpn_T . '",' . keys . ')<CR>'
 
-exe join(cmds, "\n")
+endfor
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
