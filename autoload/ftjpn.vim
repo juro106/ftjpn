@@ -1,6 +1,38 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
+" Normal Mode
+function! ftjpn#Forward_N(key, pattern) abort
+    exe "silent normal! " . v:count1 . a:key . s:SetForwardChar(a:pattern)
+endfunction
+
+function! ftjpn#Backward_N(key, pattern) abort
+    exe "silent normal! " . v:count1 . a:key . s:SetBackwardChar(a:pattern)
+endfunction
+
+" Operator-pending Mode
+function! ftjpn#Forward_O(key, pattern) abort
+    return a:key . s:SetForwardChar(a:pattern)
+endfunction
+
+function! ftjpn#Backward_O(key, pattern) abort
+    return a:key . s:SetBackwardChar(a:pattern)
+endfunction
+
+" f, t: 前方検索で利用する char の選定
+function! s:SetForwardChar(pattern) abort
+    let line = getline('.')[col('.')-1:]
+    let dict = s:CreateCharDistanceDict(line, a:pattern)
+    return s:GetClosestKey(dict)
+endfunction
+
+" F, T: 後方検索で利用する char の選定
+function! s:SetBackwardChar(pattern) abort
+    let line = reverse(getline('.')[:col('.')-1])
+    let dict = s:CreateCharDistanceDict(line, a:pattern)
+    return s:GetClosestKey(dict)
+endfunction
+
 " 最終的なキー決定
 function! s:GetClosestKey(dict)
     if len(a:dict)==0
@@ -33,53 +65,6 @@ function! s:CreateCharDistanceDict(line, pattern) abort
 	return dict
 endfunction
 
-" f, t: 前方検索で利用する char の選定
-function! s:SetForwardChar(pattern) abort
-    let line = getline('.')[col('.')-1:]
-    let dict = s:CreateCharDistanceDict(line, a:pattern)
-    return s:GetClosestKey(dict)
-endfunction
-
-" F, T: 後方検索で利用する char の選定
-function! s:SetBackwardChar(pattern) abort
-    let line = reverse(getline('.')[:col('.')-1])
-    let dict = s:CreateCharDistanceDict(line, a:pattern)
-    return s:GetClosestKey(dict)
-endfunction
-
-" Normal Mode
-function! ftjpn#Jfmove(pattern) abort
-    exe "silent normal! " . v:count1 . "f" . s:SetForwardChar(a:pattern)
-endfunction
-
-function! ftjpn#JFmove(pattern) abort
-    exe "silent normal! " . v:count1 . "F" . s:SetBackwardChar(a:pattern)
-endfunction
-
-function! ftjpn#Jtmove(pattern) abort
-    exe "silent normal! " . v:count1 . "t" . s:SetForwardChar(a:pattern)
-endfunction
-
-function! ftjpn#JTmove(pattern) abort
-    exe "silent normal! " . v:count1 . "T" . s:SetBackwardChar(a:pattern)
-endfunction
-
-" Operator-pending Mode
-function! ftjpn#Jof(pattern) abort
-    return "f" . s:SetForwardChar(a:pattern)
-endfunction
-
-function! ftjpn#JoF(pattern) abort
-    return "F" . s:SetBackwardChar(a:pattern)
-endfunction
-
-function! ftjpn#Jot(pattern) abort
-    return "t" . s:SetForwardChar(a:pattern)
-endfunction
-
-function! ftjpn#JoT(pattern) abort
-    return "T" . s:SetBackwardChar(a:pattern)
-endfunction
-
 let &cpo = s:save_cpo
 unlet s:save_cpo
+

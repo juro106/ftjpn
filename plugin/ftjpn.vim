@@ -24,7 +24,8 @@ elseif type(g:ftjpn_key_list) ==# 4 " dictionary
     let new_list = []
     for key in keys(g:ftjpn_key_list)
         let cur_list = g:ftjpn_key_list[key]
-        if cur_list[0] == key
+        let cur_key = cur_list[0]
+        if cur_key == key
             call add(new_list, cur_list)
         else
             call add(new_list, [key] + cur_list)
@@ -32,36 +33,36 @@ elseif type(g:ftjpn_key_list) ==# 4 " dictionary
     endfor
     let key_list = new_list
 else
-    let key_list = [
-       \ ['.'],
-       \ [','],
-       \ ]
+    let key_list = [['.'], [',']]
 endif
 
-function! s:SetKeyMap(nested_list) abort
-    for list in a:nested_list
-        let arr = []
-        for i in list
-            let j = i == '|' ? '\|' : i
-            let k = "'" . j . "'"
-            call add(arr, k)
-        endfor
-        let keys = "[" . join(arr, ",") . "]"
-        exe 'nnoremap <silent> ' . g:ftjpn_f . list[0] . ' :<C-u>call ftjpn#Jfmove(' . keys . ')<CR>'
-        exe 'nnoremap <silent> ' . g:ftjpn_F . list[0] . ' :<C-u>call ftjpn#JFmove(' . keys . ')<CR>'
-        exe 'nnoremap <silent> ' . g:ftjpn_t . list[0] . ' :<C-u>call ftjpn#Jtmove(' . keys . ')<CR>'
-        exe 'nnoremap <silent> ' . g:ftjpn_T . list[0] . ' :<C-u>call ftjpn#JTmove(' . keys . ')<CR>'
-        exe 'onoremap <silent><expr> ' . g:ftjpn_f . list[0] . ' ftjpn#Jof(' . keys . ')'
-        exe 'onoremap <silent><expr> ' . g:ftjpn_F . list[0] . ' ftjpn#JoF(' . keys . ')'
-        exe 'onoremap <silent><expr> ' . g:ftjpn_t . list[0] . ' ftjpn#Jot(' . keys . ')'
-        exe 'onoremap <silent><expr> ' . g:ftjpn_T . list[0] . ' ftjpn#JoT(' . keys . ')'
-        exe 'xnoremap <silent><expr> ' . g:ftjpn_f . list[0] . ' ftjpn#Jof(' . keys . ')'
-        exe 'xnoremap <silent><expr> ' . g:ftjpn_F . list[0] . ' ftjpn#JoF(' . keys . ')'
-        exe 'xnoremap <silent><expr> ' . g:ftjpn_t . list[0] . ' ftjpn#Jot(' . keys . ')'
-        exe 'xnoremap <silent><expr> ' . g:ftjpn_T . list[0] . ' ftjpn#JoT(' . keys . ')'
+let cmds = []
+for list in key_list
+    let key = list[0]
+    let arr = []
+    for i in list
+        let j = i == '|' ? '\|' : i
+        let k = "'" . j . "'"
+        call add(arr, k)
     endfor
-endfunction
-call <SID>SetKeyMap(key_list)
+
+    let keys = "[" . join(arr, ",") . "]"
+
+    call add(cmds, 'nnoremap <silent> ' . g:ftjpn_f . key . ' :<C-u>call ftjpn#Forward_N("' . g:ftjpn_f . '",' . keys . ')<CR>')
+    call add(cmds, 'nnoremap <silent> ' . g:ftjpn_t . key . ' :<C-u>call ftjpn#Forward_N("' . g:ftjpn_t . '",' . keys . ')<CR>')
+    call add(cmds, 'nnoremap <silent> ' . g:ftjpn_F . key . ' :<C-u>call ftjpn#Backward_N("' . g:ftjpn_F . '",' . keys . ')<CR>')
+    call add(cmds, 'nnoremap <silent> ' . g:ftjpn_T . key . ' :<C-u>call ftjpn#Backward_N("' . g:ftjpn_T . '",' . keys . ')<CR>')
+    call add(cmds, 'onoremap <silent><expr> ' . g:ftjpn_f . key . ' ftjpn#Forward_O("' . g:ftjpn_f . '",' . keys . ')<CR>')
+    call add(cmds, 'onoremap <silent><expr> ' . g:ftjpn_t . key . ' ftjpn#Forward_O("' . g:ftjpn_t . '",' . keys . ')<CR>')
+    call add(cmds, 'onoremap <silent><expr> ' . g:ftjpn_F . key . ' ftjpn#Backward_O("' . g:ftjpn_F . '",' . keys . ')<CR>')
+    call add(cmds, 'onoremap <silent><expr> ' . g:ftjpn_T . key . ' ftjpn#Backward_O("' . g:ftjpn_T . '",' . keys . ')<CR>')
+    call add(cmds, 'xnoremap <silent><expr> ' . g:ftjpn_f . key . ' ftjpn#Forward_O("' . g:ftjpn_f . '",' . keys . ')<CR>')
+    call add(cmds, 'xnoremap <silent><expr> ' . g:ftjpn_t . key . ' ftjpn#Forward_O("' . g:ftjpn_t . '",' . keys . ')<CR>')
+    call add(cmds, 'xnoremap <silent><expr> ' . g:ftjpn_F . key . ' ftjpn#Backward_O("' . g:ftjpn_F . '",' . keys . ')<CR>')
+    call add(cmds, 'xnoremap <silent><expr> ' . g:ftjpn_T . key . ' ftjpn#Backward_O("' . g:ftjpn_T . '",' . keys . ')<CR>')
+endfor
+
+exe join(cmds, "\n")
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
