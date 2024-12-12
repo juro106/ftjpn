@@ -1,13 +1,8 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-" match()用 一部の記号はエスケープする
-function! s:EscapeSpecialChar(s) abort
-    return a:s =~# '[.*^$\[~]' ? '\' . a:s : a:s
-endfunction
-
 " 最終的なキー決定
-function! s:SetChar(dict)
+function! s:GetClosestKey(dict)
     if len(a:dict)==0
         return ''
     else
@@ -20,59 +15,45 @@ function! s:SetChar(dict)
     endif
 endfunction
 
-" f, t 前方検索で利用する char の選定
+" match()用 一部の記号はエスケープする
+function! s:EscapeSpecialChar(s) abort
+    return a:s =~# '[.*^$\[~]' ? '\' . a:s : a:s
+endfunction
+
+" dict 処理
+function! s:CreateCharDistanceDict(line, pattern) abort
+	let dict = {}
+	for s in a:pattern
+		let char = '\C' . s:EscapeSpecialChar(s)
+		let matchcol = match(a:line, char, 1, 1)
+		if matchcol > 0
+			let dict[s] = matchcol
+		endif
+	endfor
+	return dict
+endfunction
+
+" f, t: 前方検索で利用する char の選定
 function! s:SetForwardChar(pattern) abort
-    let col = col('.')-1
-    let line = getline('.')[col:]
-    let dict = {}
-
-    for s in a:pattern
-        let char = '\C' . s:EscapeSpecialChar(s)
-        let matchcol = match(line, char, 1, 1)
-        if matchcol > 0
-            let dict[s] = matchcol
-        endif
-    endfor
-
-    return s:SetChar(dict)
+    let line = getline('.')[col('.')-1:]
+    let dict = s:CreateCharDistanceDict(line, a:pattern)
+    return s:GetClosestKey(dict)
 endfunction
 
-" F, T 後方検索で利用する char の選定
-function! s:SetBackChar(pattern) abort
-    let col = col('.')-2
-    let line = getline('.')[:col]
-    let dict = {}
-    let linelen = strlen(line)
-    let arr = []
-
-    while linelen > 0
-        let linelen = linelen - 1
-        let arr = add(arr, strcharpart(line, linelen))
-    endwhile
-
-    let newline = join(arr, "")
-
-    for s in a:pattern
-        let char = '\C' . s:EscapeSpecialChar(s)
-        let matchcol = match(newline, char, 1, 1)
-        if matchcol > 0
-            let dict[s] = matchcol
-        endif
-    endfor
-
-    return s:SetChar(dict)
+" F, T: 後方検索で利用する char の選定
+function! s:SetBackwardChar(pattern) abort
+    let line = reverse(getline('.')[:col('.')-1])
+    let dict = s:CreateCharDistanceDict(line, a:pattern)
+    return s:GetClosestKey(dict)
 endfunction
 
-" ----------------------------------------------------------
-" f, F & t, T
-" ----------------------------------------------------------
-
+" Normal Mode
 function! ftjpn#Jfmove(pattern) abort
     exe "silent normal! " . v:count1 . "f" . s:SetForwardChar(a:pattern)
 endfunction
 
 function! ftjpn#JFmove(pattern) abort
-    exe "silent normal! " . v:count1 . "F" . s:SetBackChar(a:pattern)
+    exe "silent normal! " . v:count1 . "F" . s:SetBackwardChar(a:pattern)
 endfunction
 
 function! ftjpn#Jtmove(pattern) abort
@@ -80,19 +61,16 @@ function! ftjpn#Jtmove(pattern) abort
 endfunction
 
 function! ftjpn#JTmove(pattern) abort
-    exe "silent normal! " . v:count1 . "T" . s:SetBackChar(a:pattern)
+    exe "silent normal! " . v:count1 . "T" . s:SetBackwardChar(a:pattern)
 endfunction
 
-" ----------------------------------------------------------
-" Operator-pending オペレーター待機モード
-" ----------------------------------------------------------
-
+" Operator-pending Mode
 function! ftjpn#Jof(pattern) abort
     return "f" . s:SetForwardChar(a:pattern)
 endfunction
 
 function! ftjpn#JoF(pattern) abort
-    return "F" . s:SetBackChar(a:pattern)
+    return "F" . s:SetBackwardChar(a:pattern)
 endfunction
 
 function! ftjpn#Jot(pattern) abort
@@ -100,7 +78,7 @@ function! ftjpn#Jot(pattern) abort
 endfunction
 
 function! ftjpn#JoT(pattern) abort
-    return "T" . s:SetBackChar(a:pattern)
+    return "T" . s:SetBackwardChar(a:pattern)
 endfunction
 
 let &cpo = s:save_cpo
