@@ -61,17 +61,5 @@ for list in key_list
 
 endfor
 
-function! ftjpn#async_setup()
-    " 200ms 後に非同期で処理を実行
-    sleep 200m
-    call ftjpn#setup_mappings()
-endfunction
-
-" Vim起動後、200ms 後に非同期で実行
-augroup ftjpn_async
-    autocmd!
-    autocmd VimEnter * call ftjpn#async_setup()
-augroup END
-
 let &cpo = s:save_cpo
 unlet s:save_cpo
