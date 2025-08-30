@@ -8,7 +8,7 @@ set cpo&vim
 
 augroup ftjpn_lazy_load
     autocmd!
-    autocmd BufReadPost,BufNewFile,BufAdd,CursorHold * call ftjpn#setup_mappings()
+    autocmd BufReadPost,BufNewFile * call ftjpn#setup_mappings()
 augroup END
 
 function! ftjpn#setup_mappings()
