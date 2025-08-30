@@ -6,13 +6,7 @@ let g:loaded_ftjpn = 1
 let s:save_cpo = &cpo
 set cpo&vim
 
-augroup ftjpn_lazy_load
-    autocmd!
-    autocmd BufReadPost,BufNewFile * call ftjpn#setup_mappings()
-augroup END
-
 function! ftjpn#setup_mappings()
-
     if !get(g:, 'ftjpn_no_defalut_key_mappings', 0)
         let g:ftjpn_f = 'f'
         let g:ftjpn_F = 'F'
@@ -63,11 +57,9 @@ function! ftjpn#setup_mappings()
         exe  'xnoremap <silent><expr> ' . g:ftjpn_F . key . ' ftjpn#Backward_O("' . g:ftjpn_F . '",' . keys . ')'
         exe  'xnoremap <silent><expr> ' . g:ftjpn_T . key . ' ftjpn#Backward_O("' . g:ftjpn_T . '",' . keys . ')'
     endfor
-
-    augroup ftjpn_lazy_load
-	    autocmd!
-    augroup END
 endfunction
+
+call ftjpn#setup_mappings()
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
