@@ -47,16 +47,11 @@ function! s:GetClosestKey(dict)
     endif
 endfunction
 
-" match()用 一部の記号はエスケープする
-function! s:EscapeSpecialChar(s) abort
-    return a:s =~# '[.*^$\[~]' ? '\' . a:s : a:s
-endfunction
-
 " dict 処理
 function! s:CreateCharDistanceDict(line, pattern) abort
 	let dict = {}
 	for s in a:pattern
-		let char = '\C' . s:EscapeSpecialChar(s)
+		let char = '\C' . escape(s, '.*^$\[]~')
 		let matchcol = match(a:line, char, 1, 1)
 		if matchcol > 0
 			let dict[s] = matchcol
