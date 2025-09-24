@@ -1,11 +1,11 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! s:Forward(key, pattern) abort
+function! ftjpn#Forward(key, pattern) abort
     return a:key . s:SetForwardChar(a:pattern)
 endfunction
 
-function! s:Backward(key, pattern) abort
+function! ftjpn#Backward(key, pattern) abort
     return a:key . s:SetBackwardChar(a:pattern)
 endfunction
 
