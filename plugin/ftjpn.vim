@@ -6,9 +6,13 @@ let g:loaded_ftjpn = 1
 let s:save_cpo = &cpo
 set cpo&vim
 
-if type(g:ftjpn_key_list) ==# 3 " list
+if !exists('g:ftjpn_key_list')
+    return
+endif
+
+if type(g:ftjpn_key_list) ==# type([]) " List type 3
     let key_list = g:ftjpn_key_list
-elseif type(g:ftjpn_key_list) ==# 4 " dictionary
+elseif type(g:ftjpn_key_list) ==# type({}) " Dictionary type 4
     let key_list = []
     for key in keys(g:ftjpn_key_list)
         let cur_list = g:ftjpn_key_list[key]
@@ -19,8 +23,6 @@ elseif type(g:ftjpn_key_list) ==# 4 " dictionary
             call add(key_list, [key] + cur_list)
         endif
     endfor
-else
-    let key_list = [['.'], [',']]
 endif
 
 for list in key_list
