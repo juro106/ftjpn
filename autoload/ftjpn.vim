@@ -23,21 +23,24 @@ function! s:SetBackwardChar(list) abort
     return s:GetClosestKey(dict, a:list)
 endfunction
 
-" 最終的なキー決定
+" 距離比較。最終的なキー決定
 function! s:GetClosestKey(dict, list)
     if empty(a:dict)
         return a:list[0]
     endif
 
-    let min_col = min(a:dict)
+    let min_key = ''
+    let min_val = -1
     for [key, value] in items(a:dict)
-        if value ==# min_col
-            return key
+        if min_val == -1 || value < min_val
+            let min_val = value
+            let min_key = key
         endif
     endfor
+    return min_key
 endfunction
 
-" dict 処理
+" dict 作成
 function! s:CreateCharDistanceDict(line, list) abort
     let dict = {}
     for c in a:list
