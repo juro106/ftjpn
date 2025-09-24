@@ -27,14 +27,7 @@ endif
 
 for list in key_list
     let key = list[0]
-    let arr = []
-    for i in list
-        let j = i == '|' ? '\|' : i
-        let k = "'" . j . "'"
-        call add(arr, k)
-    endfor
-
-    let keys = "[" . join(arr, ",") . "]"
+    let keys = escape(string(list), "|")
 
     exe  'nnoremap <silent> f' . key . ' :<C-u>call ftjpn#Forward_N( "f", ' . keys . ')<CR>'
     exe  'nnoremap <silent> t' . key . ' :<C-u>call ftjpn#Forward_N( "t", ' . keys . ')<CR>'
