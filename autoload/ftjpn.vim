@@ -27,14 +27,14 @@ endfunction
 function! s:GetClosestKey(dict)
     if len(a:dict) == 0
         return ''
-    else
-        let min_col = min(a:dict)
-        for [key, value] in items(a:dict)
-            if value ==# min_col
-                return key
-            endif
-        endfor
     endif
+
+    let min_col = min(a:dict)
+    for [key, value] in items(a:dict)
+        if value ==# min_col
+            return key
+        endif
+    endfor
 endfunction
 
 " dict 処理
