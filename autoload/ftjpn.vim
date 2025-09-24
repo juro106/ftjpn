@@ -25,7 +25,7 @@ endfunction
 
 " 最終的なキー決定
 function! s:GetClosestKey(dict, list)
-    if len(a:dict) == 0
+    if empty(a:dict)
         return a:list[0]
     endif
 
@@ -40,11 +40,11 @@ endfunction
 " dict 処理
 function! s:CreateCharDistanceDict(line, list) abort
     let dict = {}
-    for s in a:list
-        let char = '\C' . escape(s, '.*^$\[]~')
+    for c in a:list
+        let char = '\C' . escape(c, '.*^$\[]~')
         let matchcol = match(a:line, char, 1, 1)
         if matchcol > 0
-            let dict[s] = matchcol
+            let dict[c] = matchcol
         endif
     endfor
     return dict
