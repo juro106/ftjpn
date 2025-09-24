@@ -6,8 +6,6 @@ let g:loaded_ftjpn = 1
 let s:save_cpo = &cpo
 set cpo&vim
 
-let key_list = []
-
 if type(g:ftjpn_key_list) ==# 3 " list
     let key_list = g:ftjpn_key_list
 elseif type(g:ftjpn_key_list) ==# 4 " dictionary

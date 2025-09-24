@@ -35,7 +35,7 @@ endfunction
 
 " 最終的なキー決定
 function! s:GetClosestKey(dict)
-    if len(a:dict)==0
+    if len(a:dict) == 0
         return ''
     else
         let min_col = min(a:dict)
