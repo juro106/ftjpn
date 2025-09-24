@@ -7,7 +7,7 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 if !exists('g:ftjpn_key_list')
-    return
+    finish
 endif
 
 if type(g:ftjpn_key_list) ==# type([]) " List type 3
