@@ -24,7 +24,7 @@ function! s:SetBackwardChar(list) abort
 endfunction
 
 " 距離比較。最終的なキー決定
-function! s:GetClosestKey(dict, list)
+function! s:GetClosestKey(dict, list) abort
     if empty(a:dict)
         return a:list[0]
     endif
