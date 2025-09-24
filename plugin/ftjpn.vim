@@ -27,18 +27,18 @@ for list in key_list
     let key = list[0]
     let keys = escape(string(list), "|")
 
-    exe  'nnoremap <silent> f' . key . ' :<C-u>call ftjpn#Forward_N( "f", ' . keys . ')<CR>'
-    exe  'nnoremap <silent> t' . key . ' :<C-u>call ftjpn#Forward_N( "t", ' . keys . ')<CR>'
-    exe  'nnoremap <silent> F' . key . ' :<C-u>call ftjpn#Backward_N("F", ' . keys . ')<CR>'
-    exe  'nnoremap <silent> T' . key . ' :<C-u>call ftjpn#Backward_N("T", ' . keys . ')<CR>'
-    exe  'onoremap <silent><expr> f' . key . ' ftjpn#Forward_O("f", ' . keys . ')'
-    exe  'onoremap <silent><expr> t' . key . ' ftjpn#Forward_O("t", ' . keys . ')'
-    exe  'onoremap <silent><expr> F' . key . ' ftjpn#Backward_O("F", ' . keys . ')'
-    exe  'onoremap <silent><expr> T' . key . ' ftjpn#Backward_O("T", ' . keys . ')'
-    exe  'xnoremap <silent><expr> f' . key . ' ftjpn#Forward_O("f", ' . keys . ')'
-    exe  'xnoremap <silent><expr> t' . key . ' ftjpn#Forward_O("t", ' . keys . ')'
-    exe  'xnoremap <silent><expr> F' . key . ' ftjpn#Backward_O("F", ' . keys . ')'
-    exe  'xnoremap <silent><expr> T' . key . ' ftjpn#Backward_O("T", ' . keys . ')'
+    exe  'nnoremap <silent><expr> f' . key . ' ftjpn#Forward("f", ' . keys . ')'
+    exe  'nnoremap <silent><expr> t' . key . ' ftjpn#Forward("t", ' . keys . ')'
+    exe  'nnoremap <silent><expr> F' . key . ' ftjpn#Backward("F", ' . keys . ')'
+    exe  'nnoremap <silent><expr> T' . key . ' ftjpn#Backward("T", ' . keys . ')'
+    exe  'onoremap <silent><expr> f' . key . ' ftjpn#Forward("f", ' . keys . ')'
+    exe  'onoremap <silent><expr> t' . key . ' ftjpn#Forward("t", ' . keys . ')'
+    exe  'onoremap <silent><expr> F' . key . ' ftjpn#Backward("F", ' . keys . ')'
+    exe  'onoremap <silent><expr> T' . key . ' ftjpn#Backward("T", ' . keys . ')'
+    exe  'xnoremap <silent><expr> f' . key . ' ftjpn#Forward("f", ' . keys . ')'
+    exe  'xnoremap <silent><expr> t' . key . ' ftjpn#Forward("t", ' . keys . ')'
+    exe  'xnoremap <silent><expr> F' . key . ' ftjpn#Backward("F", ' . keys . ')'
+    exe  'xnoremap <silent><expr> T' . key . ' ftjpn#Backward("T", ' . keys . ')'
 endfor
 
 let &cpo = s:save_cpo

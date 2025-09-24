@@ -1,21 +1,11 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-" Normal Mode
-function! ftjpn#Forward_N(key, pattern) abort
-    exe "silent normal! " . v:count1 . a:key . s:SetForwardChar(a:pattern)
-endfunction
-
-function! ftjpn#Backward_N(key, pattern) abort
-    exe "silent normal! " . v:count1 . a:key . s:SetBackwardChar(a:pattern)
-endfunction
-
-" Operator-pending Mode
-function! ftjpn#Forward_O(key, pattern) abort
+function! s:Forward(key, pattern) abort
     return a:key . s:SetForwardChar(a:pattern)
 endfunction
 
-function! ftjpn#Backward_O(key, pattern) abort
+function! s:Backward(key, pattern) abort
     return a:key . s:SetBackwardChar(a:pattern)
 endfunction
 
