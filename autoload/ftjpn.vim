@@ -24,7 +24,7 @@ function! s:SetBackwardChar(list) abort
 endfunction
 
 " 最終的なキー決定
-function! s:GetClosestKey(dict)
+function! s:GetClosestKey(dict, list)
     if len(a:dict) == 0
         return a:list[0]
     endif
