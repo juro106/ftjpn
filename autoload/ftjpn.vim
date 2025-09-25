@@ -12,45 +12,41 @@ endfunction
 " f, t: 前方検索で利用する char の選定
 function! s:SetForwardChar(list) abort
     let line = getline('.')[col('.')-1:]
-    let dict = s:CreateCharDistanceDict(line, a:list)
-    return s:GetClosestKey(dict, a:list)
+    return s:SetClosestChar(line, a:list)
 endfunction
 
 " F, T: 後方検索で利用する char の選定
 function! s:SetBackwardChar(list) abort
     let line = reverse(getline('.')[:col('.')-1])
-    let dict = s:CreateCharDistanceDict(line, a:list)
-    return s:GetClosestKey(dict, a:list)
+    return s:SetClosestChar(line, a:list)
 endfunction
 
-" 距離比較。最終的なキー決定
-function! s:GetClosestKey(dict, list) abort
-    if empty(a:dict)
+" line の中でカーソルから最寄りの文字を返す
+function! s:SetClosestChar(line, list) abort
+    " 比較用 map {char: col, ...} (dictionary型) を作成
+    let map = {}
+    for c in a:list
+        let regex_pattern = '\C' . escape(c, '.*^$\[]~')
+        let matchcol = match(a:line, regex_pattern, 1, 1)
+        if matchcol > 0
+            let map[c] = matchcol
+        endif
+    endfor
+
+    if empty(map)
         return a:list[0]
     endif
 
+    " 距離比較。最終的なキー決定
     let min_key = ''
     let min_val = -1
-    for [key, value] in items(a:dict)
+    for [key, value] in items(map)
         if min_val == -1 || value < min_val
             let min_val = value
             let min_key = key
         endif
     endfor
     return min_key
-endfunction
-
-" dict 作成
-function! s:CreateCharDistanceDict(line, list) abort
-    let dict = {}
-    for c in a:list
-        let char = '\C' . escape(c, '.*^$\[]~')
-        let matchcol = match(a:line, char, 1, 1)
-        if matchcol > 0
-            let dict[c] = matchcol
-        endif
-    endfor
-    return dict
 endfunction
 
 let &cpo = s:save_cpo
