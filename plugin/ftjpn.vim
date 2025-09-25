@@ -8,7 +8,7 @@ set cpo&vim
 
 function! s:Init() abort
     if !exists('g:ftjpn_key_list')
-        finish
+        return
     endif
 
     if type(g:ftjpn_key_list) ==# type([]) " List type 3
@@ -25,7 +25,7 @@ function! s:Init() abort
             endif
         endfor
     else
-        finish
+        return
     endif
 
     for list in key_list
