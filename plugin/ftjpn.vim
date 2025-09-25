@@ -29,18 +29,18 @@ for list in key_list
     let key = list[0]
     let keys = escape(string(list), "|")
 
-    exe  'nnoremap <silent><expr> f' . key . ' ftjpn#Forward("f", ' . keys . ')'
-    exe  'nnoremap <silent><expr> t' . key . ' ftjpn#Forward("t", ' . keys . ')'
-    exe  'nnoremap <silent><expr> F' . key . ' ftjpn#Backward("F", ' . keys . ')'
-    exe  'nnoremap <silent><expr> T' . key . ' ftjpn#Backward("T", ' . keys . ')'
-    exe  'onoremap <silent><expr> f' . key . ' ftjpn#Forward("f", ' . keys . ')'
-    exe  'onoremap <silent><expr> t' . key . ' ftjpn#Forward("t", ' . keys . ')'
-    exe  'onoremap <silent><expr> F' . key . ' ftjpn#Backward("F", ' . keys . ')'
-    exe  'onoremap <silent><expr> T' . key . ' ftjpn#Backward("T", ' . keys . ')'
-    exe  'xnoremap <silent><expr> f' . key . ' ftjpn#Forward("f", ' . keys . ')'
-    exe  'xnoremap <silent><expr> t' . key . ' ftjpn#Forward("t", ' . keys . ')'
-    exe  'xnoremap <silent><expr> F' . key . ' ftjpn#Backward("F", ' . keys . ')'
-    exe  'xnoremap <silent><expr> T' . key . ' ftjpn#Backward("T", ' . keys . ')'
+    exe 'nnoremap <silent><expr> f' . key . ' ftjpn#Forward("f", ' . keys . ')'
+    exe 'nnoremap <silent><expr> t' . key . ' ftjpn#Forward("t", ' . keys . ')'
+    exe 'nnoremap <silent><expr> F' . key . ' ftjpn#Backward("F", ' . keys . ')'
+    exe 'nnoremap <silent><expr> T' . key . ' ftjpn#Backward("T", ' . keys . ')'
+    exe 'onoremap <silent><expr> f' . key . ' ftjpn#Forward("f", ' . keys . ')'
+    exe 'onoremap <silent><expr> t' . key . ' ftjpn#Forward("t", ' . keys . ')'
+    exe 'onoremap <silent><expr> F' . key . ' ftjpn#Backward("F", ' . keys . ')'
+    exe 'onoremap <silent><expr> T' . key . ' ftjpn#Backward("T", ' . keys . ')'
+    exe 'xnoremap <silent><expr> f' . key . ' ftjpn#Forward("f", ' . keys . ')'
+    exe 'xnoremap <silent><expr> t' . key . ' ftjpn#Forward("t", ' . keys . ')'
+    exe 'xnoremap <silent><expr> F' . key . ' ftjpn#Backward("F", ' . keys . ')'
+    exe 'xnoremap <silent><expr> T' . key . ' ftjpn#Backward("T", ' . keys . ')'
 endfor
 
 let &cpo = s:save_cpo
