@@ -23,6 +23,8 @@ elseif type(g:ftjpn_key_list) ==# type({}) " Dictionary type 4
             call add(key_list, [key] + cur_list)
         endif
     endfor
+else
+    finish
 endif
 
 for list in key_list
