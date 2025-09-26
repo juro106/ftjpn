@@ -3,9 +3,6 @@ if exists('g:loaded_ftjpn')
 endif
 let g:loaded_ftjpn = 1
 
-let s:save_cpo = &cpo
-set cpo&vim
-
 function! s:Init() abort
     if !exists('g:ftjpn_key_list')
         return
@@ -48,6 +45,3 @@ function! s:Init() abort
 endfunction
 
 call s:Init()
-
-let &cpo = s:save_cpo
-unlet s:save_cpo
