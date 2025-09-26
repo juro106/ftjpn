@@ -1,4 +1,4 @@
-if exists('g:loaded_ftjpn')
+if exists('g:loaded_ftjpn') && g:loaded_ftjpn
     finish
 endif
 let g:loaded_ftjpn = 1
