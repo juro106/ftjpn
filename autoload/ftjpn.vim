@@ -2,27 +2,17 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 function! ftjpn#Forward(key, list) abort
-    return a:key . s:SetForwardChar(a:list)
+    let line = getline('.')[col('.')-1:]
+    return a:key . s:GetClosestChar(line, a:list)
 endfunction
 
 function! ftjpn#Backward(key, list) abort
-    return a:key . s:SetBackwardChar(a:list)
-endfunction
-
-" f, t: 前方検索で利用する char の選定
-function! s:SetForwardChar(list) abort
-    let line = getline('.')[col('.')-1:]
-    return s:SetClosestChar(line, a:list)
-endfunction
-
-" F, T: 後方検索で利用する char の選定
-function! s:SetBackwardChar(list) abort
     let line = reverse(getline('.')[:col('.')-1])
-    return s:SetClosestChar(line, a:list)
+    return a:key . s:GetClosestChar(line, a:list)
 endfunction
 
 " line の中でカーソルから最寄りの文字を返す
-function! s:SetClosestChar(line, list) abort
+function! s:GetClosestChar(line, list) abort
     " 比較用 dict {char: col, ...} (dictionary型) を作成
     let dict = {}
     for c in a:list
