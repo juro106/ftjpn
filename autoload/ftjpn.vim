@@ -16,8 +16,7 @@ function! s:GetClosestChar(line, list) abort
     " 比較用 dict {char: col, ...} (dictionary型) を作成
     let dict = {}
     for c in a:list
-        let regex_pattern = '\C' . escape(c, '.*^$\[]~')
-        let matchcol = match(a:line, regex_pattern, 1, 1)
+        let matchcol = stridx(a:line, c, 1)
         if matchcol > 0
             let dict[c] = matchcol
         endif
